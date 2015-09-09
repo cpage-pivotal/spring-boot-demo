@@ -1,0 +1,44 @@
+package demo;
+
+import demo.model.Sensor;
+import demo.model.SensorRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+
+@Controller
+public class DemoController {
+
+    @Autowired
+    JdbcTemplate _jdbcTemplate;
+
+    @Autowired
+    SensorRepository _sensorRepository;
+
+    @RequestMapping( "/" )
+    public String home( Model model ) throws Exception {
+        model.addAttribute( "sensorDB", "Sensor DB: " + _jdbcTemplate.getDataSource().getConnection().getMetaData().getURL() );
+        return "index";
+    }
+
+    @RequestMapping( "/write" )
+    public @ResponseBody Map<String,Object> write()
+    {
+        _sensorRepository.save( new Sensor( new Random().nextInt(120)+180, new Random().nextInt(25000)+15000));
+        return new HashMap<>();
+    }
+
+    @RequestMapping( "/refresh" )
+    public @ResponseBody Iterable<Sensor> refresh()
+    {
+        return _sensorRepository.findAll();
+    }
+}
+

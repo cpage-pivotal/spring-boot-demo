@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="jumbotron">
+            <h1>Spring Boot Demo</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-4">
+                        <button type="button" id="writeButton" class="btn btn-primary">Add Sensor&nbsp;&nbsp;<i class="fa fa-toggle-up"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-sm-6">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title" th:text="${sensorDB}">Sensor DB: </h3>
+                </div>
+                <div id="mapValues" class="panel-body"></div>
+            </div>
+            <button type="button" id="refreshButton" class="btn btn-primary">Refresh&nbsp;&nbsp;<i class="fa fa-refresh"></i></button>
+        </div>
+    </div>
+</div>
+</body>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var writeUrl = [[@{/write}]];
+    $( '#writeButton' ).click( function() {
+        $.getJSON( '/write' ).
+                success( refresh );
+    });
+    $( '#refreshButton' ).click( refresh );
+
+    function refresh() { $.getJSON('/refresh').success(displayData); }
+
+    function displayData( data )
+    {
+        var tableHtml = '<table class="table"><thead><tr><th>ID</th><th>Temperature</th><th>Pressure</th></tr></thead><tbody>';
+        for ( var index in data ) {
+            tableHtml+='<tr><td>' + data[index].id + '</td><td>' + data[index].temperature + '</td><td>' + data[index].pressure + '</td></tr>';
+        }
+        tableHtml += '</tbody></table>';
+        $( '#mapValues').html( tableHtml );
+    }
+
+    $( document ).ready( refresh );
+    /*]]>*/
+</script>
+
+</html>
