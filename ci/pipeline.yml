@@ -9,7 +9,7 @@ resource_types:
 
 resources:
 
-- name: sensor-demo
+- name: spring-boot-demo
   type: git
   source:
     uri: https://github.com/cpage-pivotal/spring-boot-demo
@@ -27,16 +27,16 @@ resources:
 
 jobs:
 
-- name: deploy-scdf-demo
+- name: build-deploy
   plan:
-  - get: sensor-demo
+  - get: spring-boot-demo
     trigger: true
-  - task: build-sensor
+  - task: build-jar
     file: spring-boot-demo/ci/build-sensor.yml
   - put: cf-push
     resource: pcf-env
     params:
       command: push
       app_name: sensors
-      manifest: scdf-demo/ci/manifest.yml
+      manifest: spring-boot-demo/ci/manifest.yml
 
