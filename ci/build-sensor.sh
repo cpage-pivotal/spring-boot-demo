@@ -4,9 +4,9 @@
 
 set -e -x
 
-pushd spring-boot-demo
+pushd sensors-demo
   ./mvnw package
 popd
 
-cp spring-boot-demo/target/boot-demo-0.0.1-SNAPSHOT.jar build-sensor-output
+cp sensors-demo/target/boot-demo-0.0.1-SNAPSHOT.jar build-sensor-output
 
