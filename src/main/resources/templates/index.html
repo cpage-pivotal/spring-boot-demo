@@ -11,7 +11,7 @@
 </head>
 
 <body>
-<div class="container-fluid">`
+<div class="container-fluid">
     <div class="row">
         <div class="jumbotron">
             <h1>Sensor Database</h1>
@@ -23,6 +23,9 @@
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-4">
                         <button type="button" id="writeButton" class="btn btn-primary">Add Sensor&nbsp;&nbsp;<i class="fa fa-toggle-up"></i></button>
+                    </div>
+                    <div class="col-sm-offset-2 col-sm-4">
+                        <button type="button" id="shutdownButton" class="btn btn-danger">Shutdown&nbsp;&nbsp;<i class="fa fa-bomb"></i></button>
                     </div>
                 </div>
             </form>
@@ -60,6 +63,10 @@
         tableHtml += '</tbody></table>';
         $( '#mapValues').html( tableHtml );
     }
+
+    $( '#shutdownButton' ).click( function() {
+        $.post( '/shutdown', {} );
+    } );
 
     $( document ).ready( refresh );
     /*]]>*/

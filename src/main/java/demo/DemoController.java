@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -28,7 +29,9 @@ public class DemoController {
 
     @RequestMapping( "/" )
     public String home( Model model ) throws Exception {
-        model.addAttribute( "sensorDB", "Sensor DB: " + _jdbcTemplate.getDataSource().getConnection().getMetaData().getURL() );
+        Connection connection = _jdbcTemplate.getDataSource().getConnection();
+        model.addAttribute( "sensorDB", "Sensor DB: " + connection.getMetaData().getURL() );
+        connection.close();
         return "index";
     }
 

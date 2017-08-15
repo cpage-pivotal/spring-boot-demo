@@ -1,0 +1,42 @@
+---
+resource_types:
+
+- name: cf-cli-resource
+  type: docker-image
+  source:
+    repository: pivotalpa/cf-cli-resource
+    tag: latest
+
+resources:
+
+- name: sensor-demo
+  type: git
+  source:
+    uri: https://github.com/cpage-pivotal/spring-boot-demo
+    branch: master
+
+- name: pcf-env
+  type: cf-cli-resource
+  source:
+    api: {{CF_API}}
+    username: {{CF_USER}}
+    password: {{CF_PASSWORD}}
+    skip_cert_check: true
+    org: {{CF_ORG}}
+    space: {{CF_SPACE}}
+
+jobs:
+
+- name: deploy-scdf-demo
+  plan:
+  - get: sensor-demo
+    trigger: true
+  - task: build-sensor
+    file: spring-boot-demo/ci/build-sensor.yml
+  - put: cf-push
+    resource: pcf-env
+    params:
+      command: push
+      app_name: sensors
+      manifest: scdf-demo/ci/manifest.yml
+

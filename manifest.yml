@@ -1,8 +1,0 @@
----
-applications:
-- name: sensor-buildpack
-  path: target/boot-demo-0.0.1-SNAPSHOT.jar
-  memory: 512M
-  host: sensor-buildpack
-  buildpack: java_buildpack_offline
-
