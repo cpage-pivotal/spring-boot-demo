@@ -33,7 +33,7 @@
         <div class="col-sm-6">
             <div class="panel panel-success">
                 <div class="panel-heading">
-                    <h3 class="panel-title" th:text="${sensorDB}">Fund DB:  </h3>
+                    <h3 class="panel-title" th:text="${sensorDB}">Toyota Sensor DB:  </h3>
                 </div>
                 <div id="mapValues" class="panel-body"></div>
             </div>
@@ -56,7 +56,7 @@
 
     function displayData( data )
     {
-        var tableHtml = '<table class="table"><thead><tr><th>ID</th><th>Price</th><th>Risk</th></tr></thead><tbody>';
+        var tableHtml = '<table class="table"><thead><tr><th>ID</th><th>Temperature</th><th>Pressure</th></tr></thead><tbody>';
         for ( var index in data ) {
             tableHtml+='<tr><td>' + data[index].id + '</td><td>' + data[index].temperature + '</td><td>' + data[index].pressure + '</td></tr>';
         }
