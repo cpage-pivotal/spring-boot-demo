@@ -38,7 +38,7 @@ public class DemoController {
     @RequestMapping( "/write" )
     public @ResponseBody Map<String,Object> write()
     {
-        _sensorRepository.save( new Sensor( new Random().nextInt(120)+180, new Random().nextInt(25000)+15000));
+        _sensorRepository.save( new Sensor( new Random().nextInt(120)+160, new Random().nextInt(25000)+15000));
         return new HashMap<>();
     }
 
