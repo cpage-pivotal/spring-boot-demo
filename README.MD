@@ -1,3 +1,3 @@
-# Cloud Native Episode 1: Spring Boot
+# Web Database
 
-This is the code that was written for the video at https://www.youtube.com/watch?v=t_hJO5QPT6U
+Standalone web database app for use in CI/CD demo
