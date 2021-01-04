@@ -1,7 +1,7 @@
-package demo;
+package org.tanzu.demo;
 
-import demo.model.Sensor;
-import demo.model.SensorRepository;
+import org.tanzu.demo.model.Sensor;
+import org.tanzu.demo.model.SensorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -27,24 +27,24 @@ public class DemoController {
     @Autowired
     ConfigurableEnvironment _configurableEnvironment;
 
-    @RequestMapping( "/" )
-    public String home( Model model ) throws Exception {
+    @RequestMapping("/")
+    public String home(Model model) throws Exception {
         Connection connection = _jdbcTemplate.getDataSource().getConnection();
-        model.addAttribute( "sensorDB", "Sensor DB: " + connection.getMetaData().getURL() );
+        model.addAttribute("sensorDB", "Sensor DB: " + connection.getMetaData().getURL());
         connection.close();
         return "index";
     }
 
-    @RequestMapping( "/write" )
-    public @ResponseBody Map<String,Object> write()
-    {
-        _sensorRepository.save( new Sensor( new Random().nextInt(120)+160, new Random().nextInt(25000)+15000));
+    @RequestMapping("/write")
+    public @ResponseBody
+    Map<String, Object> write() {
+        _sensorRepository.save(new Sensor(new Random().nextInt(120) + 170, new Random().nextInt(25000) + 15000));
         return new HashMap<>();
     }
 
-    @RequestMapping( "/refresh" )
-    public @ResponseBody Iterable<Sensor> refresh()
-    {
+    @RequestMapping("/refresh")
+    public @ResponseBody
+    Iterable<Sensor> refresh() {
         return _sensorRepository.findAll();
     }
 }

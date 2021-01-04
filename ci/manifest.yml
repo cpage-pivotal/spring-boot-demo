@@ -1,7 +1,0 @@
----
-applications:
-- name: sensors
-  buildpack: java_buildpack_offline
-  path: /tmp/build/put/build-sensor-output/boot-demo-0.0.1-SNAPSHOT.jar
-  memory: 1024M
-  random-route: true

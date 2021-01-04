@@ -14,7 +14,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="jumbotron">
-            <h1>Harbor Debug</h1>
+            <h1>Sensor Database</h1>
         </div>
     </div>
     <div class="row">
@@ -22,22 +22,25 @@
             <form class="form-horizontal">
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-4">
-                        <button type="button" id="writeButton" class="btn btn-primary">Add Sensor&nbsp;&nbsp;<i class="fa fa-toggle-up"></i></button>
+                        <button type="button" id="writeButton" class="btn btn-primary">Add Sensor&nbsp;&nbsp;<i
+                                class="fa fa-toggle-up"></i></button>
                     </div>
-                    <div class="col-sm-offset-2 col-sm-4">
-                        <button type="button" id="shutdownButton" class="btn btn-danger">Shutdown&nbsp;&nbsp;<i class="fa fa-bomb"></i></button>
-                    </div>
+<!--                    <div class="col-sm-offset-2 col-sm-4">-->
+<!--                        <button type="button" id="shutdownButton" class="btn btn-danger">Shutdown&nbsp;&nbsp;<i-->
+<!--                                class="fa fa-bomb"></i></button>-->
+<!--                    </div>-->
                 </div>
             </form>
         </div>
         <div class="col-sm-6">
             <div class="panel panel-success">
                 <div class="panel-heading">
-                    <h3 class="panel-title" th:text="${sensorDB}">Sensor DB:  </h3>
+                    <h3 class="panel-title" th:text="${sensorDB}">Sensor DB: </h3>
                 </div>
                 <div id="mapValues" class="panel-body"></div>
             </div>
-            <button type="button" id="refreshButton" class="btn btn-primary">Refresh&nbsp;&nbsp;<i class="fa fa-refresh"></i></button>
+            <button type="button" id="refreshButton" class="btn btn-primary">Refresh&nbsp;&nbsp;<i
+                    class="fa fa-refresh"></i></button>
         </div>
     </div>
 </div>
@@ -46,29 +49,29 @@
 <script th:inline="javascript">
     /*<![CDATA[*/
     var writeUrl = [[@{/write}]];
-    $( '#writeButton' ).click( function() {
-        $.getJSON( '/write' ).
-                success( refresh );
-    });
-    $( '#refreshButton' ).click( refresh );
+        $('#writeButton').click(function () {
+            $.getJSON('/write').success(refresh);
+        });
+    $('#refreshButton').click(refresh);
 
-    function refresh() { $.getJSON('/refresh').success(displayData); }
-
-    function displayData( data )
-    {
-        var tableHtml = '<table class="table"><thead><tr><th>ID</th><th>Temperature</th><th>Pressure</th></tr></thead><tbody>';
-        for ( var index in data ) {
-            tableHtml+='<tr><td>' + data[index].id + '</td><td>' + data[index].temperature + '</td><td>' + data[index].pressure + '</td></tr>';
-        }
-        tableHtml += '</tbody></table>';
-        $( '#mapValues').html( tableHtml );
+    function refresh() {
+        $.getJSON('/refresh').success(displayData);
     }
 
-    $( '#shutdownButton' ).click( function() {
-        $.post( '/shutdown', {} );
-    } );
+    function displayData(data) {
+        var tableHtml = '<table class="table"><thead><tr><th>ID</th><th>Temperature</th><th>Pressure</th></tr></thead><tbody>';
+        for (var index in data) {
+            tableHtml += '<tr><td>' + data[index].id + '</td><td>' + data[index].temperature + '</td><td>' + data[index].pressure + '</td></tr>';
+        }
+        tableHtml += '</tbody></table>';
+        $('#mapValues').html(tableHtml);
+    }
 
-    $( document ).ready( refresh );
+    // $('#shutdownButton').click(function () {
+    //     $.post('/shutdown', {});
+    // });
+
+    $(document).ready(refresh);
     /*]]>*/
 </script>
 
